@@ -1,0 +1,26 @@
+From: Enron Deduplication System <noreply@dedup.system>
+To: Yucheng.yan.jimmy@gmail.com
+Subject: [Duplicate Notice] Re: The state of things
+Date: Sat, 23 May 2026 18:40:47 +0000
+References: <29439885.1075849292538.JavaMail.evans@thyme>
+Content-Type: text/plain; charset=utf-8
+
+This is an automated notification from the Email Deduplication System.
+
+Your email has been identified as a potential duplicate:
+
+  Your Email (Flagged):
+    Message-ID:  <29439885.1075849292538.JavaMail.evans@thyme>
+    Date Sent:   2001-06-29T17:38:00Z
+    Subject:     The state of things
+
+  Original Email on Record:
+    Message-ID:  <22203156.1075849421494.JavaMail.evans@thyme>
+    Date Sent:   2001-06-29T17:38:00Z
+
+  Similarity Score: 100.0%
+
+If this was NOT a duplicate and you intended to send this email,
+please reply with CONFIRM to restore it to active status.
+
+No action is required if this is indeed a duplicate.

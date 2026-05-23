@@ -1,0 +1,26 @@
+From: Enron Deduplication System <noreply@dedup.system>
+To: Yucheng.yan.jimmy@gmail.com
+Subject: [Duplicate Notice] Re: Checking in
+Date: Sat, 23 May 2026 18:40:47 +0000
+References: <19675945.1075843447517.JavaMail.evans@thyme>
+Content-Type: text/plain; charset=utf-8
+
+This is an automated notification from the Email Deduplication System.
+
+Your email has been identified as a potential duplicate:
+
+  Your Email (Flagged):
+    Message-ID:  <19675945.1075843447517.JavaMail.evans@thyme>
+    Date Sent:   2001-04-26T11:35:00Z
+    Subject:     Checking in
+
+  Original Email on Record:
+    Message-ID:  <9945433.1075843884859.JavaMail.evans@thyme>
+    Date Sent:   2001-04-26T11:35:00Z
+
+  Similarity Score: 100.0%
+
+If this was NOT a duplicate and you intended to send this email,
+please reply with CONFIRM to restore it to active status.
+
+No action is required if this is indeed a duplicate.

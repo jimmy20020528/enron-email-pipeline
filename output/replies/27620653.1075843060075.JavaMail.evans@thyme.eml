@@ -1,0 +1,26 @@
+From: Enron Deduplication System <noreply@dedup.system>
+To: Yucheng.yan.jimmy@gmail.com
+Subject: [Duplicate Notice] Re: Compliance Issues
+Date: Sat, 23 May 2026 18:40:47 +0000
+References: <27620653.1075843060075.JavaMail.evans@thyme>
+Content-Type: text/plain; charset=utf-8
+
+This is an automated notification from the Email Deduplication System.
+
+Your email has been identified as a potential duplicate:
+
+  Your Email (Flagged):
+    Message-ID:  <27620653.1075843060075.JavaMail.evans@thyme>
+    Date Sent:   2000-12-04T13:09:00Z
+    Subject:     Compliance Issues
+
+  Original Email on Record:
+    Message-ID:  <3393361.1075843169039.JavaMail.evans@thyme>
+    Date Sent:   2000-12-04T13:09:00Z
+
+  Similarity Score: 100.0%
+
+If this was NOT a duplicate and you intended to send this email,
+please reply with CONFIRM to restore it to active status.
+
+No action is required if this is indeed a duplicate.

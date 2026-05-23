@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "gmail-sender": {
+      "type": "stdio",
+      "command": "python3",
+      "args": ["./gmail_mcp_server.py"],
+      "env": {
+        "GMAIL_CREDENTIALS": "./credentials.json",
+        "GMAIL_TOKEN": "./token.json"
+      }
+    }
+  }
+}

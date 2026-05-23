@@ -1,0 +1,23 @@
+# Gmail OAuth credentials — never commit these
+credentials.json
+token.json
+
+# Database — too large for git
+enron.db
+
+# Enron dataset
+maildir/
+*.tar.gz
+
+# Claude Code internal config
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+
+# Assignment docx
+*.docx
+~$*.docx
