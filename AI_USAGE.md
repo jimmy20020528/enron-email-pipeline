@@ -69,8 +69,22 @@ Prompting with a specific failing input ("here's the exact string that breaks it
    open('token.json','w').write(creds.to_json())
    "
    ```
-5. Add to `~/.claude.json` (see `mcp_config.json.example`)
-6. Restart Claude Code, verify with `/mcp`
+5. Register server in `~/.claude.json` under the project's `mcpServers` key (see `mcp_config.json.example`)
+6. Restart Claude Code — the `send_email` tool appears as a native tool in the session
+
+**How Claude Code calls it:**
+
+Once registered, Claude Code calls `send_email` directly as a tool — no terminal command needed:
+
+```
+Tool: mcp__gmail-sender__send_email
+Args: {
+  "to": "yucheng.yan.jimmy@gmail.com",
+  "subject": "[Duplicate Notice] Re: Energy Issues",
+  "body": "... notification body with real Enron message IDs and 98.53% similarity score ..."
+}
+Result: {"status": "sent", "message_id": "19e56772e0acebed"}
+```
 
 **Issues:**
 - System Python (3.9) was too old for the `mcp` package — switched to Homebrew Python 3.11
@@ -82,6 +96,7 @@ Prompting with a specific failing input ("here's the exact string that breaks it
 ```
 timestamp,recipient,subject,status,error
 2026-05-23T18:40:48Z,Yucheng.yan.jimmy@gmail.com,[Duplicate Notice] Re: Daily Call,success,
+2026-05-23T19:13:20Z,Yucheng.yan.jimmy@gmail.com,[Duplicate Notice] Re: Energy Issues,success,
 ```
 
-![Email received in Gmail](email_screenshot.png)
+![Duplicate notification email received in Gmail](email_screenshot.png)
