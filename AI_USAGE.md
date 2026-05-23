@@ -9,22 +9,32 @@ Time spent: roughly 1 day
 
 ## Prompting Strategy
 
-I broke the problem into modules and prompted one at a time. Giving Claude the full spec at once produced generic, hard-to-review code. Smaller prompts with clear constraints worked much better.
+I broke the problem into modules and prompted one at a time. Giving Claude the full spec at once produced generic, hard-to-review code that was hard to review or debug. Prompting per-module with explicit type signatures and constraints kept the output focused and testable in isolation.
 
 **Prompt 1 — Email parser**
 > "Write `parse_email_file(filepath, maildir_root)` that returns a dict with message_id, date (UTC ISO8601), from_address (address only, not display name), to_addresses (list), subject, body, source_file. Use Python's stdlib email module. Raise ValueError if any mandatory field is missing."
 
+*Why structured this way:* Specifying the exact function signature and return type upfront prevented the AI from inventing its own interface. Naming the mandatory fields explicitly meant the error handling was correct from the first attempt.
+
 **Prompt 2 — Timezone edge cases**  
 > "Enron Date headers look like `Mon, 12 Nov 2001 10:30:00 -0800 (PST)` — the parenthetical at the end breaks `parsedate_to_datetime`. Strip it with regex before parsing, and add a TZ abbreviation map for PST/PDT/CST/CDT/EST/EDT."
+
+*Why structured this way:* Providing the exact failing input string got a targeted fix immediately. Abstract problem descriptions ("timezone parsing fails sometimes") produced over-engineered solutions.
 
 **Prompt 3 — Database schema**  
 > "SQLite schema for the pipeline. to/cc/bcc must go in a separate `email_recipients` table, not comma-separated strings. UNIQUE on message_id, indexes on date/from_address/subject. Must include is_duplicate, duplicate_of, notification_sent, notification_date columns."
 
+*Why structured this way:* Stating the normalization constraint explicitly prevented the AI from defaulting to comma-separated strings, which is its natural fallback for list fields.
+
 **Prompt 4 — Deduplication performance**  
 > "Rewrite `find_duplicates` — the current version compares all emails pairwise which is O(n²). First group by (from_address, normalized_subject), then only compare bodies within each group using rapidfuzz token_set_ratio >= 90."
 
+*Why structured this way:* I diagnosed the performance problem myself first (O(n²)), then handed the AI the solution architecture. This is faster than asking the AI to figure out why it's slow.
+
 **Prompt 5 — Gmail MCP server**  
 > "Build a minimal MCP server using FastMCP that exposes one tool: send_email(to, subject, body) via Gmail API with OAuth2. Run with stdio transport."
+
+*Why structured this way:* "Minimal" constrained scope — without it, the AI added unnecessary tools and config options. Specifying stdio transport prevented it from defaulting to HTTP.
 
 ---
 
@@ -48,7 +58,15 @@ About **75% AI-generated, 25% manual**. The manual parts were mostly:
 
 ## Lessons Learned
 
-Prompting with a specific failing input ("here's the exact string that breaks it") got much better fixes than describing the problem abstractly. The AI also consistently assumed UTF-8 encoding — I had to explicitly ask for chardet fallback after seeing real failures on Latin-1 Enron files.
+**What worked well:**
+- Prompting with a specific failing input ("here's the exact string that breaks it") got precise fixes immediately — far better than describing the problem abstractly.
+- Module-by-module prompting kept each output reviewable and testable before moving on.
+- The AI was strong at boilerplate-heavy code: CSV writing, MIME email construction, SQLite schema, argparse setup — all correct on the first try.
+
+**What was harder than expected:**
+- The AI consistently assumed UTF-8 encoding everywhere. I had to explicitly ask for `chardet` fallback after seeing real `UnicodeDecodeError` crashes on Latin-1 Enron files — it never suggested this proactively.
+- Performance issues were invisible to the AI until I measured them myself. It never warned that the pairwise O(n²) approach would be unusable at 76K emails — I had to benchmark it, diagnose the bottleneck, and hand it the redesign.
+- MCP path resolution: the AI used relative paths (`./credentials.json`) which worked when running directly but broke when Claude Code launched the server as a subprocess from a different working directory. Required manual fix.
 
 ---
 
