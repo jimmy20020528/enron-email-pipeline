@@ -72,16 +72,22 @@ Prompting with a specific failing input ("here's the exact string that breaks it
 5. Register server in `~/.claude.json` under the project's `mcpServers` key (see `mcp_config.json.example`)
 6. Restart Claude Code — the `send_email` tool appears as a native tool in the session
 
-**How Claude Code calls it:**
+**How I prompted Claude Code to use the send_email tool:**
 
-Once registered, Claude Code calls `send_email` directly as a tool — no terminal command needed:
+Example prompts used during development and verification:
+
+> "Send a duplicate notification email to my Gmail using the MCP server. Use real data from duplicates_report.csv — pick a group with a partial similarity score and a real subject line."
+
+> "Use the gmail-sender MCP tool to send a [Duplicate Notice] email for the Energy Issues duplicate group from jeff.dasovich. Format the body exactly according to the notification template in notifier.py."
+
+Claude Code then called `send_email` directly as a native tool — no terminal command needed:
 
 ```
 Tool: mcp__gmail-sender__send_email
 Args: {
   "to": "yucheng.yan.jimmy@gmail.com",
   "subject": "[Duplicate Notice] Re: Energy Issues",
-  "body": "... notification body with real Enron message IDs and 98.53% similarity score ..."
+  "body": "This is an automated notification from the Email Deduplication System...\n  Message-ID: <9848718.1075851633487.JavaMail.evans@thyme>\n  Similarity Score: 98.53%"
 }
 Result: {"status": "sent", "message_id": "19e56772e0acebed"}
 ```
