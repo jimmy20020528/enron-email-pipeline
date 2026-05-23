@@ -148,9 +148,19 @@ These five mailboxes yielded **76,095 emails** — far exceeding the 10,000 mini
 | Emails flagged as duplicate | 45,091 (59.3%) |
 | Average group size | 3.18 |
 | Draft .eml notifications generated | 20,665 |
-| Live notification emails sent | 1 (verified received) |
+| Live notification emails sent | 2 (verified received) |
 
 ### MCP Notification — Verified Delivery
+
+Claude Code called the `send_email` tool directly via the registered `gmail-sender` MCP server — no terminal command, just a native tool call from within the session:
+
+```
+Tool: mcp__gmail-sender__send_email
+Args: { "to": "yucheng.yan.jimmy@gmail.com",
+        "subject": "[Duplicate Notice] Re: Energy Issues",
+        "body": "...real Enron message IDs, 98.53% similarity..." }
+Result: {"status": "sent", "message_id": "19e56772e0acebed"}
+```
 
 ![Duplicate notification email received in Gmail](email_screenshot.png)
 
